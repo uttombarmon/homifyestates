@@ -3,8 +3,13 @@ const { connect } = require('mongoose');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT||5000;
-const connectDB = require('./db/connectDB/connectDB')
+const connectDB = require('./db/connectDB/connectDB');
+const userRoute = require('./routes/users/users');
 
+app.use(express.json())
+
+
+app.use('/users',userRoute)
 
 
 app.get('/homify', (req, res) => {
