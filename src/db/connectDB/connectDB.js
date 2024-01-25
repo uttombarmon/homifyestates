@@ -25,8 +25,8 @@ const connectDB = async ()=>{
     console.log("connecting to database");
     const mongoURI = getConnectionDB();
 
-    await mongoose.connect(mongoURI,{ dbName: process.env.DB_NAME })
-    await mongoose.connect(mongoURI,{ dbName: process.env.DB_NAME })
+    // await mongoose.connect(mongoURI,{ dbName: process.env.DB_NAME })
+    await mongoose.connect('mongodb://localhost:27017',{ dbName: process.env.DB_NAME })
     console.log("connected to database");
 };
 module.exports= connectDB;

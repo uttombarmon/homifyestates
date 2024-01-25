@@ -8,18 +8,19 @@ const userSchema =  mongoose.Schema({
         type:String,
         required:true
     },
-    img:{
+    photoURL:{
         type:String,
         required:true
     },
-    pass:{
+    password:String,
+    role:{
         type:String,
+        enum:['user','agent','admin'],
         required:true
     },
-    status:{
+    method:{
         type:String,
-        enum:['user','agent'],
-        required:true
+        enum:['google','facebook','email password']
     }
 },
 {
