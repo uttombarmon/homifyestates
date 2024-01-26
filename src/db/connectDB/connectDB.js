@@ -25,7 +25,8 @@ const connectDB = async ()=>{
     console.log("connecting to database");
     const mongoURI = getConnectionDB();
 
-    await mongoose.connect(mongoURI,{ dbName: process.env.DB_NAME })
+    // await mongoose.connect(mongoURI,{ dbName: process.env.DB_NAME })
+    await mongoose.connect(`mongodb+srv://${process.env.DATABASE_LOCAL_USERNAME}:${process.env.DATABASE_LOCAL_PASSWORD}@cluster0.8gn4coa.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
     // await mongoose.connect('mongodb://localhost:27017',{ dbName: process.env.DB_NAME })
     console.log("connected to database");
 };
