@@ -1,10 +1,25 @@
 const express = require('express');
 const { connect } = require('mongoose');
+const cors = require('cors')
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT||5000;
-const connectDB = require('./db/connectDB/connectDB')
+const connectDB = require('./db/connectDB/connectDB');
+const checkoutRoute = require('./routes/homeRoutes/checkoutRoute/checkoutRoute');
+const userRoute = require('./routes/users/usersRoutes');
+const chooseRoute = require('./routes/homeRoutes/chooseRoute/chooseRoute');
+const reviewRouter = require('./routes/homeRoutes/reviewRoutes/reviewRoutes');
+app.use(express.json());
+app.use(cors({
+  origin:[process.env.CLIENT]
+}))
 
+
+
+app.use('/users',userRoute)
+app.use('/home',checkoutRoute)
+app.use('/home',chooseRoute)
+app.use('/home',reviewRouter)
 
 
 app.get('/homify', (req, res) => {
