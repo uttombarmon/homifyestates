@@ -11,7 +11,7 @@ const chooseRoute = require('./routes/homeRoutes/chooseRoute/chooseRoute');
 const reviewRouter = require('./routes/homeRoutes/reviewRoutes/reviewRoutes');
 app.use(express.json());
 app.use(cors({
-  origin:['https://homifyestate-bf41d.web.app','http://localhost:5173']
+  origin:['https://homifyestate-bf41d.web.app','http://localhost:5175']
 }))
 
 
