@@ -9,17 +9,27 @@ const checkoutRoute = require('./routes/homeRoutes/checkoutRoute/checkoutRoute')
 const userRoute = require('./routes/users/usersRoutes');
 const chooseRoute = require('./routes/homeRoutes/chooseRoute/chooseRoute');
 const reviewRouter = require('./routes/homeRoutes/reviewRoutes/reviewRoutes');
+const orderRouter = require('./routes/orderRoute/orderRoute');
 app.use(express.json());
 app.use(cors({
   origin:['http://localhost:5173']
-}))
+}));
+
+
+
+// ssLcommerz;
+
+
 
 
 
 app.use('/users',userRoute)
 app.use('/home',checkoutRoute)
 app.use('/home',chooseRoute)
-app.use('/home',reviewRouter)
+app.use('/home',reviewRouter);
+
+// order routes;
+app.use('/order',orderRouter)
 
 
 app.get('/homify', (req, res) => {
