@@ -10,6 +10,9 @@ const userRoute = require('./routes/users/usersRoutes');
 const chooseRoute = require('./routes/homeRoutes/chooseRoute/chooseRoute');
 const reviewRouter = require('./routes/homeRoutes/reviewRoutes/reviewRoutes');
 const orderRouter = require('./routes/orderRoute/orderRoute');
+const meetTheProfRouter = require('./routes/meetTheProfessionalRoute/meetTheProfessionalRoute');
+const latestNewRouter = require('./routes/homeRoutes/latestNews/latestNewsRoute');
+const ourProjectRouter = require('./routes/homeRoutes/ourProject/ourProjectRoute');
 app.use(express.json());
 app.use(cors({
 
@@ -18,7 +21,7 @@ app.use(cors({
 
 
 
-// ssLcommerz;
+
 
 
 
@@ -32,9 +35,13 @@ app.use('/users',userRoute)
 app.use('/home',checkoutRoute)
 app.use('/home',chooseRoute)
 app.use('/home',reviewRouter);
+app.use('/home',meetTheProfRouter);
+app.use('/home',latestNewRouter);
+app.use('/home',ourProjectRouter);
 
 // order routes;
-app.use('/order',orderRouter)
+app.use('/order',orderRouter);
+
 
 
 app.get('/homify', (req, res) => {
