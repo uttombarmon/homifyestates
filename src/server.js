@@ -22,15 +22,6 @@ app.use(cors({
 
 
 
-
-
-
-  origin:[process.env.CLIENT,process.env.LOCAL_CLIENT]
-}))
-
-
-
-
 app.use('/users',userRoute)
 app.use('/home',checkoutRoute)
 app.use('/home',chooseRoute)

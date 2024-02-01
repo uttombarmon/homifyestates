@@ -17,6 +17,7 @@ meetTheProfRouter.post('/meet-professional', async (req, res) => {
 meetTheProfRouter.get('/meet-professional', async (req, res) => {
     try {
         const result = await meetTheProfessionalModel.find();
+        console.log(result);
         res.send(result).status(200)
     } catch (error) {
         res.json({ message: error })
