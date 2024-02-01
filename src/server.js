@@ -12,6 +12,7 @@ const reviewRouter = require('./routes/homeRoutes/reviewRoutes/reviewRoutes');
 const orderRouter = require('./routes/orderRoute/orderRoute');
 app.use(express.json());
 app.use(cors({
+
   origin:['http://localhost:5173']
 }));
 
@@ -19,6 +20,10 @@ app.use(cors({
 
 // ssLcommerz;
 
+
+
+  origin:[process.env.CLIENT,process.env.LOCAL_CLIENT]
+}))
 
 
 
