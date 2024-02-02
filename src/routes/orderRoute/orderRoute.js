@@ -22,10 +22,12 @@ orderRouter.post('/', async (req, res) => {
             total_amount: req?.body?.amount,
             currency: 'BDT',
             tran_id: trans_id, // use unique tran_id for each api call
-            success_url: `http://localhost:5000/order/payment/success/${trans_id}`,
-            fail_url: `http://localhost:5000/order/payment/fail/${trans_id}`,
-            cancel_url: 'http://localhost:3030/cancel',
-            ipn_url: 'http://localhost:3030/ipn',
+            // success_url: `http://localhost:5000/order/payment/success/${trans_id}`,
+            success_url: `${process.env.LOCAL_CLIENT}/payment/success/${trans_id}`,
+            // fail_url: `http://localhost:5000/order/payment/fail/${trans_id}`,
+            fail_url: `${process.env.LOCAL_CLIENT}/payment/fail/${trans_id}`,
+            cancel_url: `${process.env.LOCAL_CLIENT}/payment/fail/${trans_id}`,
+            ipn_url: `${process.env.LOCAL_CLIENT}/payment/fail/${trans_id}`,
             shipping_method: 'Courier',
             product_name: 'Computer.',
             product_category: 'Electronic',
@@ -86,7 +88,7 @@ orderRouter.post('/', async (req, res) => {
 
         orderRouter.post('/payment/fail/:transId', async (req, res) => {
             const result = await orderModel.deleteOne({ transectionId: req.params.transId });
-            console.log('delete info:',result)
+            console.log('delete info:', result)
             if (result.deletedCount) {
                 res.redirect(`http://localhost:5173/payment/fail/${req.params.transId}`)
             }
@@ -96,8 +98,14 @@ orderRouter.post('/', async (req, res) => {
         // res.send(result).status(200);
         console.log('order is inserted to DB')
     } catch (error) {
-        // res.send(error).send(500);
-        console.log(' order is failed to insert DB')
+        if (error.name === 'ValidationError') {
+            // Handle validation errors, possibly by sending a 400 Bad Request response
+            res.status(400).json({ error: 'Validation failed', details: error.errors });
+        } else {
+            // Handle other errors, possibly by sending a 500 Internal Server Error response
+            console.error('Unexpected error:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
     }
 });
 

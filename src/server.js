@@ -35,7 +35,7 @@ app.use('/order',orderRouter);
 
 
 
-app.get('/homify', (req, res) => {
+app.get('/', (req, res) => {
   res.send('homifyestates server is running .....!')
 });
 
@@ -49,6 +49,7 @@ app.use((err,req,res,next)=>{
    res.status(err.status || 500).json({
     message:err.message
    });
+   next(err)
 })
 
 const main=async()=>{
