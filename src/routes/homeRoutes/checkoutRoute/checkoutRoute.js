@@ -37,5 +37,18 @@ checkoutRoute.get('/checkout/:id', async (req, res) => {
     res.send(error.message).status(500)
   }
 });
+// get single property data;
+checkoutRoute.get('/checkout/:id', async (req, res) => {
+  try {
+    const id = req.params.id
+    const result = await checkoutModel.findById({ _id:id});
+    console.log(result);
+    console.log('checkout/home data is founded');
+    res.send(result).status(200)
+  } catch (error) {
+    console.log('failed to find the checkout data');
+    res.send(error.message).status(500)
+  }
+});
 
 module.exports = checkoutRoute;
