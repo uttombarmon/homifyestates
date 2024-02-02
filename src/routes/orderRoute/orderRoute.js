@@ -23,7 +23,7 @@ orderRouter.post('/', async (req, res) => {
             currency: 'BDT',
             tran_id: trans_id, // use unique tran_id for each api call
             // success_url: `http://localhost:5000/order/payment/success/${trans_id}`,
-            success_url: `${process.env.LOCAL_CLIENT}/payment/success/${trans_id}`,
+            success_url: `${process.env.CLIENT}/payment/success/${trans_id}`,
             // fail_url: `http://localhost:5000/order/payment/fail/${trans_id}`,
             fail_url: `${process.env.CLIENT}/payment/fail/${trans_id}`,
             cancel_url: `${process.env.CLIENT}/payment/fail/${trans_id}`,
