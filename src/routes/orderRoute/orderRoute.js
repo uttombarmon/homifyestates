@@ -25,9 +25,9 @@ orderRouter.post('/', async (req, res) => {
             // success_url: `http://localhost:5000/order/payment/success/${trans_id}`,
             success_url: `${process.env.LOCAL_CLIENT}/payment/success/${trans_id}`,
             // fail_url: `http://localhost:5000/order/payment/fail/${trans_id}`,
-            fail_url: `${process.env.LOCAL_CLIENT}/payment/fail/${trans_id}`,
-            cancel_url: `${process.env.LOCAL_CLIENT}/payment/fail/${trans_id}`,
-            ipn_url: `${process.env.LOCAL_CLIENT}/payment/fail/${trans_id}`,
+            fail_url: `${process.env.CLIENT}/payment/fail/${trans_id}`,
+            cancel_url: `${process.env.CLIENT}/payment/fail/${trans_id}`,
+            ipn_url: `${process.env.CLIENT}/payment/fail/${trans_id}`,
             shipping_method: 'Courier',
             product_name: 'Computer.',
             product_category: 'Electronic',
@@ -78,7 +78,7 @@ orderRouter.post('/', async (req, res) => {
                 })
                 console.log('the update info:', result)
                 if (result.modifiedCount > 0) {
-                    res.redirect(`http://localhost:5173/payment/success/${req.params.transId}`)
+                    res.redirect(`${process.env.CLIENT}/payment/success/${req.params.transId}`)
                 }
 
             } catch (error) {
@@ -90,7 +90,7 @@ orderRouter.post('/', async (req, res) => {
             const result = await orderModel.deleteOne({ transectionId: req.params.transId });
             console.log('delete info:', result)
             if (result.deletedCount) {
-                res.redirect(`http://localhost:5173/payment/fail/${req.params.transId}`)
+                res.redirect(`${process.env.CLIENT}/payment/fail/${req.params.transId}`)
             }
         })
 
