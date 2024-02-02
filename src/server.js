@@ -1,6 +1,6 @@
 const express = require('express');
 const { connect } = require('mongoose');
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT||5000;
@@ -15,10 +15,8 @@ const latestNewRouter = require('./routes/homeRoutes/latestNews/latestNewsRoute'
 const ourProjectRouter = require('./routes/homeRoutes/ourProject/ourProjectRoute');
 app.use(express.json());
 app.use(cors({
-
-  origin:['http://localhost:5173']
-}));
-
+  origin:['https://homifyestate-8556d.web.app','http://localhost:5173']
+}))
 
 
 
