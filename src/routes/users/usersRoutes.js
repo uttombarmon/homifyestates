@@ -33,12 +33,16 @@ userRoute.post('/user', async (req, res) => {
 // update a user to DB;
 userRoute.patch('/user/:id', async (req, res) => {
     try {
-        // console.log(req.body.status)
+        //  console.log(req.params.id)
         const result = await userModel.updateOne({ _id: req.params.id }, {
             $set: {
                 name: req?.body?.name,
-                status: req?.body?.status,
-                img: req?.body?.img
+                photoURL: req?.body?.photoURL,
+                city:req?.body?.city,
+                country:req?.body?.country,
+                address:req?.body?.address,
+                phone:req?.body?.phone
+
             }
         });
         console.log(result)

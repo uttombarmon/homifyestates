@@ -13,6 +13,7 @@ const orderRouter = require('./routes/orderRoute/orderRoute');
 const meetTheProfRouter = require('./routes/meetTheProfessionalRoute/meetTheProfessionalRoute');
 const latestNewRouter = require('./routes/homeRoutes/latestNews/latestNewsRoute');
 const ourProjectRouter = require('./routes/homeRoutes/ourProject/ourProjectRoute');
+const wishListRouter = require('./routes/wishListRoute/wishListRoute');
 app.use(express.json());
 app.use(cors({
   origin:['http://localhost:5173']
@@ -36,6 +37,8 @@ app.use('/home',ourProjectRouter);
 
 // order routes;
 app.use('/order',orderRouter);
+// wish list routes;
+app.use('/wish-lists',wishListRouter)
 
 
 

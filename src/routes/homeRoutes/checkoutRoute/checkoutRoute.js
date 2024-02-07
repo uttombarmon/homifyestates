@@ -16,7 +16,7 @@ checkoutRoute.post('/checkout', async (req, res) => {
 // get all checkout data;
 checkoutRoute.get('/checkout', async (req, res) => {
     try {
-        const result = await  checkoutModel.find();
+        const result = await  checkoutModel.find().select({_id:0});
         console.log('checkout/home data is founded');
         res.send(result).status(200)
     } catch (error) {
