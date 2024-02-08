@@ -1,6 +1,6 @@
 const express = require('express');
 const { connect } = require('mongoose');
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT||5000;
@@ -16,14 +16,8 @@ const ourProjectRouter = require('./routes/homeRoutes/ourProject/ourProjectRoute
 const wishListRouter = require('./routes/wishListRoute/wishListRoute');
 app.use(express.json());
 app.use(cors({
-  origin:['http://localhost:5173']
-}));
-
-
-
-
-
-
+  origin:['https://homifyestate-8556d.web.app','http://localhost:5173']
+}))
 
 
 
@@ -42,7 +36,7 @@ app.use('/wish-lists',wishListRouter)
 
 
 
-app.get('/homify', (req, res) => {
+app.get('/', (req, res) => {
   res.send('homifyestates server is running .....!')
 });
 
@@ -56,6 +50,7 @@ app.use((err,req,res,next)=>{
    res.status(err.status || 500).json({
     message:err.message
    });
+   next(err)
 })
 
 const main=async()=>{
