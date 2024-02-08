@@ -4,7 +4,8 @@ const { ObjectId } = require('mongodb');
 const orderRouter = express.Router();
 
 //payment for ssLcommerz
-const SSLCommerzPayment = require('sslcommerz-lts')
+const SSLCommerzPayment = require('sslcommerz-lts');
+const checkoutModel = require('../../models/checkout/checkoutModel');
 const store_id = process.env.STORE_ID
 const store_passwd = process.env.STORE_PASS
 const is_live = false //true for live, false for sandbox
@@ -13,17 +14,17 @@ const trans_id = new ObjectId().toString();
 
 orderRouter.post('/', async (req, res) => {
 
-
+    console.log(req.body.formData);
 
     // const result = await orderModel(req.body).save();
     try {
 
         const data = {
-            total_amount: req?.body?.amount,
+            total_amount: req?.body?.formData.amount,
             currency: 'BDT',
             tran_id: trans_id, // use unique tran_id for each api call
-            // success_url: `http://localhost:5000/order/payment/success/${trans_id}`,
-            success_url: `${process.env.CLIENT}/payment/success/${trans_id}`,
+            // success_url: `http://localhost:5000/order/payment/success/${trans_id}?id=${req?.body?.formData?.property}`,
+            success_url: `${process.env.CLIENT}/payment/success/${trans_id}?id=${req?.body?.formData?.property}`,
             // fail_url: `http://localhost:5000/order/payment/fail/${trans_id}`,
             fail_url: `${process.env.CLIENT}/payment/fail/${trans_id}`,
             cancel_url: `${process.env.CLIENT}/payment/fail/${trans_id}`,
@@ -32,8 +33,8 @@ orderRouter.post('/', async (req, res) => {
             product_name: 'Computer.',
             product_category: 'Electronic',
             product_profile: 'general',
-            cus_name: req?.body?.name,
-            cus_email: req?.body?.email,
+            cus_name: req?.body?.formData?.name,
+            cus_email: req?.body?.formData?.email,
             cus_add1: 'Dhaka',
             cus_add2: 'Dhaka',
             cus_city: 'Dhaka',
@@ -58,41 +59,45 @@ orderRouter.post('/', async (req, res) => {
             // res.redirect(GatewayPageURL)
             res.send({ url: GatewayPageURL });
 
-            const paymentInfo = req.body
+            const paymentInfo = req.body.formData
             paymentInfo.paymentStatus = false;
             paymentInfo.transectionId = trans_id;
             // console.log(paymentInfo)
-            const result = orderModel(req.body).save();
+            const result = orderModel(paymentInfo).save();
             console.log('Redirecting to: ', GatewayPageURL)
         });
 
 
 
-        orderRouter.post('/payment/success/:transId', async (req, res) => {
-            console.log("the transId :", req.params.transId)
-            try {
-                const result = await orderModel.updateOne({ transectionId: req.params.transId }, {
-                    $set: {
-                        paymentStatus: true
-                    }
-                })
-                console.log('the update info:', result)
-                if (result.modifiedCount > 0) {
-                    res.redirect(`${process.env.CLIENT}/payment/success/${req.params.transId}`)
-                }
+        // orderRouter.post('/payment/success/:transId', async (req, res) => {
+        //     console.log("the transId :", req.params.transId)
+        //     console.log(req.query.id);
+        //     const id = req.query.id
+        //     try {
+        //         const result = await orderModel.updateOne({ transectionId: req.params.transId }, {
+        //             $set: {
+        //                 paymentStatus: true
+        //             }
+        //         })
+        //         const updateStatus = await checkoutModel.findByIdAndUpdate(id, { $set: {'property_details.status': 'sold' }},{new:true})
+        //         console.log('the update info:', result)
+        //         console.log('the update info:', updateStatus)
+        //         if (result.modifiedCount > 0 && updateStatus.modifiedCount > 0) {
+        //             res.redirect(`${process.env.CLIENT}/payment/success/${req.params.transId}`)
+        //         }
 
-            } catch (error) {
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // });
 
-            }
-        });
-
-        orderRouter.post('/payment/fail/:transId', async (req, res) => {
-            const result = await orderModel.deleteOne({ transectionId: req.params.transId });
-            console.log('delete info:', result)
-            if (result.deletedCount) {
-                res.redirect(`${process.env.CLIENT}/payment/fail/${req.params.transId}`)
-            }
-        })
+        // orderRouter.post('/payment/fail/:transId', async (req, res) => {
+        //     const result = await orderModel.deleteOne({ transectionId: req.params.transId });
+        //     console.log('delete info:', result)
+        //     if (result.deletedCount) {
+        //         res.redirect(`${process.env.CLIENT}/payment/fail/${req.params.transId}`)
+        //     }
+        // })
 
 
         // res.send(result).status(200);
@@ -108,6 +113,40 @@ orderRouter.post('/', async (req, res) => {
         }
     }
 });
+orderRouter.patch('/payment/success/:transId', async (req, res) => {
+    console.log("the transId :", req.params.transId)
+    console.log(req.query.id);
+    const id = req.query.id
+    try {
+        const result = await orderModel.updateOne({ transectionId: req.params.transId }, {
+            $set: {
+                paymentStatus: true
+            }
+        })
+        const updateStatus = await checkoutModel.findByIdAndUpdate(id, {
+            $set: {
+                'property_details.status': 'sold'
+            }
+        }, { new: true });
+        console.log('the update info:', result)
+        console.log('the update info2:', updateStatus)
+        if (result.modifiedCount > 0 && updateStatus.modifiedCount > 0) {
+            // res.redirect(`${process.env.CLIENT}/payment/success/${req.params.transId}`)
+            res.send({'result':'modified'})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+orderRouter.delete('/payment/fail/:transId', async (req, res) => {
+    const result = await orderModel.deleteOne({ transectionId: req.params.transId });
+    console.log('delete info:', result)
+    if (result.deletedCount) {
+        // res.redirect(`${process.env.CLIENT}/payment/fail/${req.params.transId}`)
+        res.send(result)
+    }
+})
 
 
 
