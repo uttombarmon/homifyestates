@@ -7,8 +7,9 @@ const orderSchema = mongoose.Schema({
     amount: Number,
     date:String,
     phone:Number,
-    paymentStatus:String,
-    transectionId:String
+    paymentStatus:Boolean,
+    transectionId:String,
+    property:{type:mongoose.Schema.Types.ObjectId, ref:'checkoutCollection'}
 
 },
     {
