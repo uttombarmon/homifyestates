@@ -6,24 +6,7 @@ const schema = mongoose.Schema({
     property_status: String,
     description: String,
     property_image: String,
-    property_details: {
-      rooms: String,
-      status: String,
-      price: String,
-      garages: String,
-      bed_rooms: String,
-      type: String,
-      baths: String,
-      originating_year: Number,
-      size: String,
-      date_listed: String,
-      floor: String,
-      kitchen: String,
-      balcony: String,
-      thumImage: String,
-      unit: String,
-      featured: String
-    },
+    property_details: mongoose.Schema.Types.Mixed,
     facilities: [String],
     floor_plan: {
       image: String

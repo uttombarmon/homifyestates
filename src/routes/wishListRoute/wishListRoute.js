@@ -13,12 +13,6 @@ wishListRouter.get('/:email',async(req,res)=>{
     }
 })
 
-
-
-
-
-
-
 //wish list post route
 wishListRouter.post('/',async(req,res)=>{
    try {
