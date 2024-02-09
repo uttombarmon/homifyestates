@@ -14,7 +14,7 @@ const meetTheProfRouter = require('./routes/meetTheProfessionalRoute/meetTheProf
 const latestNewRouter = require('./routes/homeRoutes/latestNews/latestNewsRoute');
 const ourProjectRouter = require('./routes/homeRoutes/ourProject/ourProjectRoute');
 const wishListRouter = require('./routes/wishListRoute/wishListRoute');
-const userProfileRouter = require('./routes/homeRoutes/userDashboardRouter/profileUpdate');
+const adminRouter = require('./routes/dashboardRoutes/adminRoutes');
 app.use(express.json());
 app.use(cors({
   origin:['https://homifyestate-8556d.web.app','http://localhost:5173']
@@ -35,7 +35,9 @@ app.use('/home',userProfileRouter);
 // order routes;
 app.use('/order',orderRouter);
 // wish list routes;
-app.use('/wish-lists',wishListRouter);
+app.use('/wish-lists',wishListRouter)
+// admin dashboard routes 
+app.use('/admin',adminRouter)
 
 
 
