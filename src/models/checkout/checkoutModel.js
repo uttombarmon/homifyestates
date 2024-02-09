@@ -1,43 +1,24 @@
 const mongoose = require('mongoose');
 
 const schema = mongoose.Schema({
-    id: {
-        type: Number,
-        required: true
+    title: String,
+    email: String,
+    location: String,
+    property_status: String,
+    description: String,
+    property_image: String,
+    property_details: mongoose.Schema.Types.Mixed,
+    facilities: [String],
+    floor_plan: {
+      image: String
     },
-    title: {
-        type: String,
-        required: true
-    },
-    location: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: String,
-        required: true
-    },
-    rating: {
-        type: Number,
-        required: true
-    },
-    beds: {
-        type: Number,
-        required: true
-    },
-    baths: {
-        type: Number,
-        required: true
-    },
-    sqft: {
-        type: Number,
-        required: true
-    },
-    image: {
-        type: String,
-        required: true
-    },
-},
+    map: String,
+    author: {
+      name: String,
+      contact: String,
+      phone: String
+    }
+  },
     {
         versionKey: false
     }
