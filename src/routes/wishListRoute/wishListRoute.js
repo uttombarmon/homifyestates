@@ -4,9 +4,9 @@ const wishListRouter = express.Router();
 
 // wish list get route;
 
-wishListRouter.get('/:email',async(req,res)=>{
+wishListRouter.get('/:emails',async(req,res)=>{
     try {
-        result = await wishListModel.find({email:req.params.email});
+        result = await wishListModel.find({email:req.params.emails});
         res.send(result)
     } catch (error) {
        res.send({error:error.message}).status(500) 

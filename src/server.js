@@ -29,9 +29,6 @@ app.use('/home',reviewRouter);
 app.use('/home',meetTheProfRouter);
 app.use('/home',latestNewRouter);
 app.use('/home',ourProjectRouter);
-// userprofile data update route
-app.use('/home',userProfileRouter);
-
 // order routes;
 app.use('/order',orderRouter);
 // wish list routes;
