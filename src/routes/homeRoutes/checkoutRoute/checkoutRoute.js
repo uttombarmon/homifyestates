@@ -37,6 +37,4 @@ checkoutRoute.get('/checkout/:id', async (req, res) => {
     res.send(error.message).status(500)
   }
 });
-});
-
 module.exports = checkoutRoute;
