@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const schema = mongoose.Schema({
     title: String,
+    email: String,
     location: String,
     property_status: String,
     description: String,
@@ -12,8 +13,8 @@ const schema = mongoose.Schema({
       price: String,
       garages: String,
       bed_rooms: String,
-      type: String,
       baths: String,
+
       originating_year: Number,
       size: String,
       date_listed: String,
