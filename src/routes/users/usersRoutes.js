@@ -78,7 +78,6 @@ userRoute.patch('/user/:email', async (req, res) => {
                 country:req?.body?.country,
                 address:req?.body?.address,
                 phone:req?.body?.phone
-
             }
         });
         console.log(result)
