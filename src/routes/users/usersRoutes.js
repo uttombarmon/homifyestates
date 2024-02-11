@@ -67,10 +67,10 @@ userRoute.post('/user', async (req, res) => {
 });
 
 // update a user to DB;
-userRoute.patch('/user/:id', async (req, res) => {
+userRoute.patch('/user/:email', async (req, res) => {
     try {
-        //  console.log(req.params.id)
-        const result = await userModel.updateOne({ _id: req.params.id }, {
+         console.log(req.params.email)
+        const result = await userModel.updateOne({ email: req.params.email }, {
             $set: {
                 name: req?.body?.name,
                 photoURL: req?.body?.photoURL,
@@ -78,7 +78,6 @@ userRoute.patch('/user/:id', async (req, res) => {
                 country:req?.body?.country,
                 address:req?.body?.address,
                 phone:req?.body?.phone
-
             }
         });
         console.log(result)
