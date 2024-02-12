@@ -1,16 +1,21 @@
 const express = require('express');
 const userModel = require('../../models/userModel/userModel');
+const tokenVerify = require('../../middleware/TokenVerify/TokenVerify');
 const userRoute = express.Router();
 
 
 
 // get a user to DB;
-userRoute.get('/:email', async (req, res) => {
+userRoute.get('/:email', tokenVerify, async (req, res) => {
     try {
-        // console.log(req.body)
-        const result = await userModel.findOne({ email: req.params.email });
-        console.log(' a single user is found successfully to database');
-        res.send(result).status(200)
+        if (req.user === req.params.email) {
+            const result = await userModel.findOne({ email: req.params.email });
+            console.log(' a single user is found successfully to database');
+            res.send(result).status(200)
+        }
+        else{
+            res.send({message:'Forbidden'}).status(403)
+        }
     } catch (error) {
         console.log(' a single user finding operation failed to database');
         res.send(error.message).status(500)
@@ -49,7 +54,7 @@ userRoute.patch('/all/markfraud', async (req, res) => {
 //delete user api
 userRoute.delete('/all/deleteuser', async (req, res) => {
     const id = req.query.id
-    const data = await userModel.deleteOne({ _id:id })
+    const data = await userModel.deleteOne({ _id: id })
     res.send(data)
 })
 
@@ -69,15 +74,15 @@ userRoute.post('/user', async (req, res) => {
 // update a user to DB;
 userRoute.patch('/user/:email', async (req, res) => {
     try {
-         console.log(req.params.email)
+        console.log(req.params.email)
         const result = await userModel.updateOne({ email: req.params.email }, {
             $set: {
                 name: req?.body?.name,
                 photoURL: req?.body?.photoURL,
-                city:req?.body?.city,
-                country:req?.body?.country,
-                address:req?.body?.address,
-                phone:req?.body?.phone
+                city: req?.body?.city,
+                country: req?.body?.country,
+                address: req?.body?.address,
+                phone: req?.body?.phone
             }
         });
         console.log(result)
