@@ -23,4 +23,19 @@ wishListRouter.post('/',async(req,res)=>{
    }
 });
 
+// delte
+
+wishListRouter.delete('/:id', async (req, res) => {
+    const itemId = req.params.id;
+    try {
+      // Use deleteOne with a query based on _id
+      const deletedItem = await wishListModel.deleteOne({ _id: itemId });
+         res.send(deletedItem);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+
+
 module.exports = wishListRouter;
