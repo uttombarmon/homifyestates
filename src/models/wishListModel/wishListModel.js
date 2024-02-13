@@ -13,7 +13,9 @@ const wishListSchema = new mongoose.Schema({
     price:{
         type:String
     },
-    property:{type:mongoose.Schema.Types.ObjectId, ref:'checkoutCollection'}
+    propety:{
+        type:String
+    },
 }, { versionKey: false });
 
 const wishListModel = new mongoose.model('WishListCollection',wishListSchema);
