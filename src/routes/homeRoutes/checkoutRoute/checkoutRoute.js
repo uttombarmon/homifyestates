@@ -17,10 +17,10 @@ checkoutRoute.post('/checkout', async (req, res) => {
 // get all checkout data;
 checkoutRoute.get('/checkout', async (req, res) => {
   try {
-    const result = await checkoutModel.find();
+    console.log(req.query.type)
+    const result = await checkoutModel.find().queryFilterFn(req.query.want, req.query.location, req.query.type);
     res.send(result).status(200)
   } catch (error) {
-    console.log('failed to find the checkout data');
     res.send(error.message).status(500)
   }
 });
@@ -48,6 +48,7 @@ checkoutRoute.get('/checkout/:id', async (req, res) => {
     res.send(result).status(200)
   } catch (error) {
     res.send(error.message).status(500)
+    console.log('failed to find the checkout data');
   }
 });
 module.exports = checkoutRoute;
