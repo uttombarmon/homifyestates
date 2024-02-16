@@ -8,6 +8,7 @@ const userRoute = express.Router();
 // get a user to DB;
 userRoute.get('/:email', tokenVerify, async (req, res) => {
     try {
+        console.log(req.params.email);
         if (req.user === req.params.email) {
             const result = await userModel.findOne({ email: req.params.email });
             console.log(' a single user is found successfully to database');

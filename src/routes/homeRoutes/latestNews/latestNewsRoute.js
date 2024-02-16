@@ -17,6 +17,17 @@ latestNewRouter.post('/latestNews',async(req,res)=>{
 latestNewRouter.get('/latestNews',async(req,res)=>{
     try {
         const result = await latestNewsModel.find();
+        res.send(result.slice(0,3)).status(200)
+        
+    } catch (error) {
+        res.json({error:error.message}).status(500)
+    }
+});
+// get all the latest news data;
+latestNewRouter.get('/latestNews/id/:id',async(req,res)=>{
+    const id = req.params.id
+    try {
+        const result = await latestNewsModel.findById(id);
         res.send(result).status(200)
         
     } catch (error) {
