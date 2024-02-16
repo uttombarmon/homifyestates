@@ -40,19 +40,6 @@ checkoutRoute.get('/features', async (req, res) => {
   }
 });
 
-// get all checkout email data for dashboard;
-// checkoutRoute.get('/checkout/:email', async (req, res) => {
-//   try {
-//     const result = await checkoutModel.find({email:req.params.email});
-//     console.log('agent dashborad data is founded');
-//     res.send(result).status(200)
-//   } catch (error) {
-//     console.log('failed to find the agent dashborad  data');
-//     res.send(error.message).status(500)
-//   }
-// });
-
-
 // get single property data;
 checkoutRoute.get('/checkout/:id', async (req, res) => {
   try {
