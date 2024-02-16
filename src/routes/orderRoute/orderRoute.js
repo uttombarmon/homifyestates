@@ -6,6 +6,7 @@ const orderRouter = express.Router();
 //payment for ssLcommerz
 const SSLCommerzPayment = require('sslcommerz-lts');
 const checkoutModel = require('../../models/checkout/checkoutModel');
+const { verify } = require('jsonwebtoken');
 const store_id = process.env.STORE_ID
 const store_passwd = process.env.STORE_PASS
 const is_live = false //true for live, false for sandbox
@@ -146,6 +147,13 @@ orderRouter.delete('/payment/fail/:transId', async (req, res) => {
         // res.redirect(`${process.env.CLIENT}/payment/fail/${req.params.transId}`)
         res.send(result)
     }
+})
+// user get his own order
+orderRouter.get('/user', verify, async(req,res)=>{
+    const userEmail = req.query.email
+    const result = await orderModel.find({email:userEmail}).populate('property')
+    console.log(result);
+    res.send(result)
 })
 
 
