@@ -3,6 +3,17 @@ const { model } = require('mongoose');
 const checkoutModel = require('../../models/checkout/checkoutModel');
 const agentRoute = express.Router();
 
+//delete
+agentRoute.delete('/delete/:id', async (req, res) => {
+    const itemId = req.params.id;
+    try {
+      // Use deleteOne with a query based on _id
+      const deletedItem = await checkoutModel.deleteOne({ _id: itemId });
+         res.send(deletedItem);
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
 // order update /propetices/update/
 agentRoute.patch('/propetices/update/:id', async (req, res) => {
