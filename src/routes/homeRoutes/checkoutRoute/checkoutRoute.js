@@ -24,6 +24,16 @@ checkoutRoute.get('/checkout', async (req, res) => {
     res.send(error.message).status(500)
   }
 });
+// // get all checkout data;
+// checkoutRoute.get('/checkoutt', async (req, res) => {
+//   try {
+//     console.log(req.query.type)
+//     const result = await checkoutModel.find();
+//     res.send(result).status(200)
+//   } catch (error) {
+//     res.send(error.message).status(500)
+//   }
+// });
 
 // GET Email
 checkoutRoute.get('/checkout/:email', async (req, res) => {

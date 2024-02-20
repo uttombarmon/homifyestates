@@ -13,6 +13,9 @@ const wishListSchema = new mongoose.Schema({
     price:{
         type:String
     },
+    author:{
+        type:String
+    },
     propety:{
         type:String
     },
