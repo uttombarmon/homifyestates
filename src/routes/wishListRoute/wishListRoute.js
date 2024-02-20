@@ -7,12 +7,12 @@ const wishListRouter = express.Router();
 
 wishListRouter.get('/:emails',async(req,res)=>{
     try {
-        result = await wishListModel.find({email:req.params.emails});
+      const result = await wishListModel.find({email:req.params.emails});
         res.send(result)
     } catch (error) {
        res.send({error:error.message}).status(500) 
     }
-})
+});
 
 //wish list post route
 wishListRouter.post('/',async(req,res)=>{

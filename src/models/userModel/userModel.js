@@ -18,6 +18,7 @@ const userSchema =  mongoose.Schema({
         enum:['user','agent','admin'],
         required:true
     },
+    description:String,
     phone:String,
     city:String,
     address:String,

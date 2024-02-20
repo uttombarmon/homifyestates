@@ -26,9 +26,8 @@ const schema = new mongoose.Schema({
   },
   email:{
      type:String
-  }
-
-    
+  },
+ 
 },
     {
         versionKey: false

@@ -24,6 +24,18 @@ checkoutRoute.get('/checkout', async (req, res) => {
     res.send(error.message).status(500)
   }
 });
+
+// GET Email
+checkoutRoute.get('/checkout/:email', async (req, res) => {
+  try {
+    // console.log("123",req.params.email)
+    const result = await checkoutModel.find({email:req.params.email});
+    // console.log(result);
+    res.send(result).status(200);
+  } catch (error) {
+    res.send(error.message).status(500)
+  }
+});
 // get features latest property data;
 checkoutRoute.get('/features', async (req, res) => {
   try {
