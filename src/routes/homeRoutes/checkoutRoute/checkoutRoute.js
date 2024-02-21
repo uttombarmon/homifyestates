@@ -25,15 +25,15 @@ checkoutRoute.get('/checkout', async (req, res) => {
   }
 });
 // // get all checkout data;
-// checkoutRoute.get('/checkoutt', async (req, res) => {
-//   try {
-//     console.log(req.query.type)
-//     const result = await checkoutModel.find();
-//     res.send(result).status(200)
-//   } catch (error) {
-//     res.send(error.message).status(500)
-//   }
-// });
+checkoutRoute.get('/checkouttt', async (req, res) => {
+  try {
+    console.log(req.query.type)
+    const result = await checkoutModel.find();
+    res.send(result).status(200)
+  } catch (error) {
+    res.send(error.message).status(500)
+  }
+});
 
 // GET Email
 checkoutRoute.get('/checkout/:email', async (req, res) => {
@@ -63,7 +63,7 @@ checkoutRoute.get('/features', async (req, res) => {
 });
 
 // get single property data;
-checkoutRoute.get('/checkout/:id', async (req, res) => {
+checkoutRoute.get('/checkoutt/:id', async (req, res) => {
   try {
     const id = req.params.id
     const result = await checkoutModel.findById({ _id: id });

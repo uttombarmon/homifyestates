@@ -5,7 +5,7 @@ const reviewRouter = express.Router();
 // get all review data ;
 reviewRouter.get('/reviews', async (req, res) => {
     try {
-        const result = await reviewModel.find()
+        const result = await reviewModel.find();
         if (result.length) {
             const sortedData = result.sort((a, b) => new Date(b.date) - new Date(a.date))
             console.log(sortedData);
