@@ -15,7 +15,7 @@ const trans_id = new ObjectId().toString();
 
 orderRouter.post('/', async (req, res) => {
 
-    console.log(req.body.formData);
+    // console.log(req.body.formData);
 
     // const result = await orderModel(req.body).save();
     try {
@@ -115,8 +115,8 @@ orderRouter.post('/', async (req, res) => {
     }
 });
 orderRouter.patch('/payment/success/:transId', async (req, res) => {
-    console.log("the transId :", req.params.transId)
-    console.log(req.query.id);
+    // console.log("the transId :", req.params.transId)
+    // console.log(req.query.id);
     const id = req.query.id
     try {
         const result = await orderModel.updateOne({ transectionId: req.params.transId }, {
@@ -129,8 +129,8 @@ orderRouter.patch('/payment/success/:transId', async (req, res) => {
                 'property_details.status': 'sold'
             }
         }, { new: true });
-        console.log('the update info:', result)
-        console.log('the update info2:', updateStatus)
+        // console.log('the update info:', result)
+        // console.log('the update info2:', updateStatus)
         if (result.modifiedCount > 0 && updateStatus.modifiedCount > 0) {
             // res.redirect(`${process.env.CLIENT}/payment/success/${req.params.transId}`)
             res.send({'result':'modified'})
@@ -142,7 +142,7 @@ orderRouter.patch('/payment/success/:transId', async (req, res) => {
 
 orderRouter.delete('/payment/fail/:transId', async (req, res) => {
     const result = await orderModel.deleteOne({ transectionId: req.params.transId });
-    console.log('delete info:', result)
+    // console.log('delete info:', result)
     if (result.deletedCount) {
         // res.redirect(`${process.env.CLIENT}/payment/fail/${req.params.transId}`)
         res.send(result)
@@ -152,7 +152,7 @@ orderRouter.delete('/payment/fail/:transId', async (req, res) => {
 orderRouter.get('/user', verify, async(req,res)=>{
     const userEmail = req.query.email
     const result = await orderModel.find({email:userEmail}).populate('property')
-    console.log(result);
+    // console.log(result);
     res.send(result)
 })
 

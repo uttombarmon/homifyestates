@@ -8,10 +8,10 @@ const userRoute = express.Router();
 // get a user to DB;
 userRoute.get('/:email', tokenVerify, async (req, res) => {
     try {
-        console.log(req.params.email);
+        // console.log(req.params.email);
         if (req.user === req.params.email) {
             const result = await userModel.findOne({ email: req.params.email });
-            console.log(' a single user is found successfully to database');
+            // console.log(' a single user is found successfully to database');
             res.send(result).status(200)
         }
         else{
@@ -27,7 +27,7 @@ userRoute.get('/all/users', async (req, res) => {
     try {
         // console.log(req.body)
         const result = await userModel.find({});
-        console.log(' a single user is found successfully to database');
+        // console.log(' a single user is found successfully to database');
         res.send(result).status(200)
     } catch (error) {
         console.log(' a single user finding operation failed to database');
@@ -64,7 +64,7 @@ userRoute.post('/user', async (req, res) => {
     try {
         // console.log(req.body)
         const result = await userModel(req.body).save();
-        console.log(' a single user is inserted successfully to database');
+        // console.log(' a single user is inserted successfully to database');
         res.send(result).status(200)
     } catch (error) {
         console.log(' a single user insertion failed to database');
@@ -75,7 +75,7 @@ userRoute.post('/user', async (req, res) => {
 // update a user to DB;
 userRoute.patch('/user/:email', async (req, res) => {
     try {
-        console.log(req.params.email)
+        // console.log(req.params.email)
         const result = await userModel.updateOne({ email: req.params.email }, {
             $set: {
                 name: req?.body?.name,
@@ -86,8 +86,8 @@ userRoute.patch('/user/:email', async (req, res) => {
                 phone: req?.body?.phone
             }
         });
-        console.log(result)
-        console.log(' a single user is inserted successfully to database');
+        // console.log(result)
+        // console.log(' a single user is inserted successfully to database');
         res.send(result).status(200)
     } catch (error) {
         console.log(' a single user insertion failed to database');

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 async function tokenVerify(req, res, next) {
-    const token = req?.cookies?.token
+    const token = req?.cookies?.homify_token
     if (!token) {
         return res.status(401).send({ message: 'Unauthorized access' })
     }

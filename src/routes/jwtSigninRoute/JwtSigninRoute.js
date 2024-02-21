@@ -12,10 +12,12 @@ jwtRouter.post('/signIn', async (req, res) => {
             process.env.TOKEN_SECRET,
             { expiresIn: '1h' })
             res
-            .cookie('token', token, {
+            .cookie('homify_token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+                secure: true,
+                sameSite:'none'
+                // secure: process.env.NODE_ENV === 'production',
+                // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
             })
             .send({ success: true })
     } catch (error) {
@@ -24,7 +26,7 @@ jwtRouter.post('/signIn', async (req, res) => {
 });
 jwtRouter.post('/clear-token', async (req, res) => {
     try {
-        res.clearCookie('token', {
+        res.clearCookie('homify_token', {
             maxAge: 0, secure: process.env.NODE_ENV === 'production',
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict'
         }).send({ success: true })
