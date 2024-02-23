@@ -156,7 +156,9 @@ orderRouter.get('/user', verify, async(req,res)=>{
     res.send(result)
 })
 
-//  dletet user order
+
+//  dletet user order api
+
 orderRouter.delete('/:id', async (req, res) => {
     const itemId = req.params.id;
     try {
@@ -167,6 +169,9 @@ orderRouter.delete('/:id', async (req, res) => {
       console.log(error);
     }
   });
+
+
+
 
 
 module.exports = orderRouter
