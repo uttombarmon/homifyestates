@@ -156,6 +156,17 @@ orderRouter.get('/user', verify, async(req,res)=>{
     res.send(result)
 })
 
+//  dletet user order
+orderRouter.delete('/:id', async (req, res) => {
+    const itemId = req.params.id;
+    try {
+      // Use deleteOne with a query based on _id
+      const deletedItem = await orderModel.deleteOne({ _id: itemId });
+         res.send(deletedItem);
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
 
 module.exports = orderRouter
