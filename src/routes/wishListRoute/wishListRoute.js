@@ -57,7 +57,6 @@ wishListRouter.delete('/:id', async (req, res) => {
   try {
     const result = await checkoutModel.findOne({_id:id});
     res.send(result).status(200)
-    console.log(result ," baler data");
   } catch (error) {
     console.log('failed to  data');
     res.send(error.message).status(500)

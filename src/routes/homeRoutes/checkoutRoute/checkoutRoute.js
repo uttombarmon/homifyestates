@@ -5,7 +5,7 @@ const checkoutRoute = express.Router();
 
 // post multiple data ;
 checkoutRoute.post('/checkout', async (req, res) => {
-  console.log("fdfdfd", req.body);
+  // console.log("fdfdfd", req.body);
   try {
     const result = await checkoutModel(req.body).save();
     res.send(result).status(200)
@@ -17,7 +17,7 @@ checkoutRoute.post('/checkout', async (req, res) => {
 // get all checkout data;
 checkoutRoute.get('/checkout', async (req, res) => {
   try {
-    console.log(req.query.type)
+    // console.log(req.query.type)
     const result = await checkoutModel.find().queryFilterFn(req.query.want, req.query.location, req.query.type);
     res.send(result).status(200)
   } catch (error) {
@@ -43,6 +43,16 @@ checkoutRoute.get('/checkout/:email', async (req, res) => {
     // console.log(result);
     res.send(result).status(200);
   } catch (error) {
+    res.send(error.message).status(500)
+  }
+});
+// get features latest property data;
+checkoutRoute.get('/allcheckout', async (req, res) => {
+  try {
+    const result = await checkoutModel.find()
+    res.send(result)
+  } catch (error) {
+    console.log('failed to find the checkout data');
     res.send(error.message).status(500)
   }
 });

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
-    id:{ type: mongoose.Types.ObjectId, ref: 'checkoutCollection' },
+    id:{type: mongoose.Schema.Types.ObjectId,ref:'checkoutCollection'},
     date:String,
     comment:String,
     rating:String,
