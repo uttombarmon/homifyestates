@@ -4,15 +4,26 @@ const checkoutModel = require('../../models/checkout/checkoutModel');
 const wishListRouter = express.Router();
 
 // wish list get route;
-
 wishListRouter.get('/:emails',async(req,res)=>{
     try {
-        result = await wishListModel.find({email:req.params.emails});
+      const result = await wishListModel.find({email:req.params.emails});
         res.send(result)
     } catch (error) {
        res.send({error:error.message}).status(500) 
     }
-})
+});
+
+wishListRouter.get('/wish/property', async (req, res) => {
+  
+  try {
+    const result = await wishListModel.find();
+    console.log(result);
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
 
 //wish list post route
 wishListRouter.post('/',async(req,res)=>{

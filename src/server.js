@@ -17,6 +17,7 @@ const ourProjectRouter = require('./routes/homeRoutes/ourProject/ourProjectRoute
 const wishListRouter = require('./routes/wishListRoute/wishListRoute');
 const adminRouter = require('./routes/dashboardRoutes/adminRoutes');
 const jwtRouter = require('./routes/jwtSigninRoute/JwtSigninRoute');
+const agentRoute = require('./routes/dashboardRoutes/agentRoutes');
 
 
 app.use(express.json());
@@ -38,7 +39,8 @@ app.use('/home',ourProjectRouter);
 // order routes;
 app.use('/order',orderRouter);
 // wish list routes;
-app.use('/wish-lists',wishListRouter)
+app.use('/wish-lists',wishListRouter);
+app.use('/agent', agentRoute);
 // admin dashboard routes 
 app.use('/admin',adminRouter)
 
