@@ -1,6 +1,7 @@
 const express = require('express');
 const { connect } = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser')
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT||5000;
@@ -15,13 +16,19 @@ const latestNewRouter = require('./routes/homeRoutes/latestNews/latestNewsRoute'
 const ourProjectRouter = require('./routes/homeRoutes/ourProject/ourProjectRoute');
 const wishListRouter = require('./routes/wishListRoute/wishListRoute');
 const adminRouter = require('./routes/dashboardRoutes/adminRoutes');
+const jwtRouter = require('./routes/jwtSigninRoute/JwtSigninRoute');
+const agentRoute = require('./routes/dashboardRoutes/agentRoutes');
+
+
 app.use(express.json());
 app.use(cors({
-  origin:['https://homifyestate-8556d.web.app','http://localhost:5173']
-}))
+  origin:['https://homifyestate-8556d.web.app','http://localhost:5173'],
+  credentials:true
+}));
+app.use(cookieParser())
 
 
-
+app.use('/jwt',jwtRouter)
 app.use('/users',userRoute)
 app.use('/home',checkoutRoute)
 app.use('/home',chooseRoute)
@@ -32,7 +39,8 @@ app.use('/home',ourProjectRouter);
 // order routes;
 app.use('/order',orderRouter);
 // wish list routes;
-app.use('/wish-lists',wishListRouter)
+app.use('/wish-lists',wishListRouter);
+app.use('/agent', agentRoute);
 // admin dashboard routes 
 app.use('/admin',adminRouter)
 
