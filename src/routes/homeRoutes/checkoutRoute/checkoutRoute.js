@@ -46,7 +46,7 @@ checkoutRoute.get('/checkout/:email', async (req, res) => {
     res.send(error.message).status(500)
   }
 });
-// get features latest property data;
+// get all property data;
 checkoutRoute.get('/allcheckout', async (req, res) => {
   try {
     const result = await checkoutModel.find()
