@@ -14,8 +14,8 @@ userRoute.get('/:email', tokenVerify, async (req, res) => {
             // console.log(' a single user is found successfully to database');
             res.send(result).status(200)
         }
-        else{
-            res.send({message:'Forbidden'}).status(403)
+        else {
+            res.send({ message: 'Forbidden' }).status(403)
         }
     } catch (error) {
         console.log(' a single user finding operation failed to database');
@@ -34,6 +34,33 @@ userRoute.get('/all/users', async (req, res) => {
         res.send(error.message).status(500)
     }
 });
+
+// all agent get agent
+userRoute.get('/all/agent', async (req, res) => {
+    try {
+        // console.log(req.body)
+        const result = await userModel.find({role: 'agent'});
+        // console.log(' a single user is found successfully to database');
+        res.send(result).status(200)
+    } catch (error) {
+        console.log(' a single user finding operation failed to database');
+        res.send(error.message).status(500)
+    }
+});
+
+// agent id get 
+
+userRoute.get('/all/agent/id/:id', async (req, res)=>{
+    const id= req.params.id
+    try{
+   const result = await userModel.findById(id)
+   res.status(200).send(result)
+    }
+    catch (error) {
+        res.json({error:error.message}).status(500)
+    }
+})
+
 //make admin api
 userRoute.patch('/all/makeadmin', async (req, res) => {
     const id = req.query.id
@@ -85,8 +112,8 @@ userRoute.patch('/user/:email', async (req, res) => {
                 address: req?.body?.address,
                 phone: req?.body?.phone,
                 description: req?.body?.description
-                    
-                  
+
+
             }
         });
         // console.log(result)
