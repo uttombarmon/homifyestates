@@ -2,6 +2,7 @@ const express = require('express');
 const { model } = require('mongoose');
 const checkoutModel = require('../../models/checkout/checkoutModel');
 const reviewModel = require('../../models/reviews/reviewsModel');
+const orderModel = require('../../models/order/orderModel');
 const agentRoute = express.Router();
 
 //reviwe get agent based 
@@ -57,6 +58,17 @@ agentRoute.patch('/propetices/update/:id', async (req, res) => {
     res.send(error.message).status(500)
   }
 });
+//order route get data --uttom
+agentRoute.get('/orderdata/:email',async(req,res)=>{
+  const email= req.params.email;
+  try {
+    const allOrderData = await orderModel.find().populate('property');
+    const filterData = allOrderData.filter(d=> d.property?.author?.contact == email )
+    res.send(filterData)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 
 
 module.exports = agentRoute;
