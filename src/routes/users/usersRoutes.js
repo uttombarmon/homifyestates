@@ -22,6 +22,24 @@ userRoute.get('/:email', tokenVerify, async (req, res) => {
         res.send(error.message).status(500)
     }
 });
+// agent profile card api hridoy
+userRoute.get('/agentInfo/:email', tokenVerify, async (req, res) => {
+    try {
+        console.log(req.params.email);
+        if (req.user === req.params.email) {
+            const result = await userModel.findOne({ email: req.query.email });
+            console.log(' a single user is found successfully to database',result);
+            res.send(result).status(200)
+        }
+        else {
+            res.send({ message: 'Forbidden' }).status(403)
+        }
+    } catch (error) {
+        console.log(' a single user finding operation failed to database');
+        res.send(error.message).status(500)
+    }
+});
+
 // get all user to DB;
 userRoute.get('/all/users', async (req, res) => {
     try {
