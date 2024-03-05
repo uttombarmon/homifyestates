@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
     },
     img: {
         img1: String,
@@ -11,10 +10,10 @@ const schema = new mongoose.Schema({
     date: String,
     description: {
         type: String,
-        required: true
     },
     tag: [],
-    comment: [],
+      feedback :[],
+    
     author: {
         type: String,
         required: true
