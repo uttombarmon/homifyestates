@@ -1,10 +1,12 @@
 const express = require('express');
+const cron = require("node-cron");
 const { connect } = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser')
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT||5000;
+const customCron = require("./cron");
 const connectDB = require('./db/connectDB/connectDB');
 const checkoutRoute = require('./routes/homeRoutes/checkoutRoute/checkoutRoute');
 const userRoute = require('./routes/users/usersRoutes');
@@ -44,6 +46,9 @@ app.use('/agent', agentRoute);
 // admin dashboard routes 
 app.use('/admin',adminRouter)
 
+//nodemailer setup
+
+customCron.sendAllUserMail();
 
 
 app.get('/', (req, res) => {

@@ -24,5 +24,16 @@ meetTheProfRouter.get('/meet-professional', async (req, res) => {
     }
 })
 
+meetTheProfRouter.get('/meet-professional/id/:id',async(req,res)=>{
+    const id = req.params.id
+    try {
+        const result = await meetTheProfessionalModel.findById(id);
+        res.send(result).status(200)
+        
+    } catch (error) {
+        res.json({error:error.message}).status(500)
+    }
+});
+
 
 module.exports = meetTheProfRouter;
