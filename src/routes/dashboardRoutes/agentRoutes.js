@@ -3,10 +3,11 @@ const { model } = require('mongoose');
 const checkoutModel = require('../../models/checkout/checkoutModel');
 const reviewModel = require('../../models/reviews/reviewsModel');
 const orderModel = require('../../models/order/orderModel');
+const tokenVerify = require('../../middleware/TokenVerify/TokenVerify');
 const agentRoute = express.Router();
 
 //reviwe get agent based 
-agentRoute.get('/reviews', async (req, res) => {
+agentRoute.get('/reviews', tokenVerify, async (req, res) => {
   try {
     const result = await reviewModel.find().populate("id");
     // console.log(result);
@@ -25,7 +26,7 @@ agentRoute.get('/reviews', async (req, res) => {
 })
 
 //delete
-agentRoute.delete('/delete/:id', async (req, res) => {
+agentRoute.delete('/delete/:id', tokenVerify, async (req, res) => {
   const itemId = req.params.id;
   try {
     // Use deleteOne with a query based on _id
@@ -37,7 +38,7 @@ agentRoute.delete('/delete/:id', async (req, res) => {
 });
 
 // order update /propetices/update/
-agentRoute.patch('/propetices/update/:id', async (req, res) => {
+agentRoute.patch('/propetices/update/:id', tokenVerify, async (req, res) => {
   try {
     console.log(req.params.email)
     const result = await checkoutModel.findByIdAndUpdate({ _id: req.params.id }, {
@@ -59,11 +60,11 @@ agentRoute.patch('/propetices/update/:id', async (req, res) => {
   }
 });
 //order route get data --uttom
-agentRoute.get('/orderdata/:email',async(req,res)=>{
-  const email= req.params.email;
+agentRoute.get('/orderdata/:email', tokenVerify, async (req, res) => {
+  const email = req.params.email;
   try {
     const allOrderData = await orderModel.find().populate('property');
-    const filterData = allOrderData.filter(d=> d.property?.author?.contact == email )
+    const filterData = allOrderData.filter(d => d.property?.author?.contact == email)
     res.send(filterData)
   } catch (error) {
     res.status(500).send(error)
