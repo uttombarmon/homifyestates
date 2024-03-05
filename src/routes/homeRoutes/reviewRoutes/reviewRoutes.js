@@ -1,5 +1,6 @@
 const express = require('express');
 const reviewModel = require('../../../models/reviews/reviewsModel');
+const tokenVerify = require('../../../middleware/TokenVerify/TokenVerify');
 const reviewRouter = express.Router();
 
 // get all review data ;
@@ -19,7 +20,7 @@ reviewRouter.get('/reviews', async (req, res) => {
     }
 })
 // get single review data ;
-reviewRouter.get('/reviews/id/:id', async (req, res) => {
+reviewRouter.get('/reviews/id/:id', tokenVerify, async (req, res) => {
     try {
         const id = req.params.id
         const result = await reviewModel.find({ id: id })
@@ -36,7 +37,7 @@ reviewRouter.get('/reviews/id/:id', async (req, res) => {
     }
 })
 // post multiple review data ;
-reviewRouter.post('/reviews', async (req, res) => {
+reviewRouter.post('/reviews', tokenVerify, async (req, res) => {
     console.log(req.body.datas);
     try {
         const result = await reviewModel(req.body.datas).save();

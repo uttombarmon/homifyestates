@@ -1,10 +1,11 @@
 const express = require('express');
 const wishListModel = require('../../models/wishListModel/wishListModel');
 const checkoutModel = require('../../models/checkout/checkoutModel');
+const tokenVerify = require('../../middleware/TokenVerify/TokenVerify');
 const wishListRouter = express.Router();
 
 // wish list get route;
-wishListRouter.get('/:emails',async(req,res)=>{
+wishListRouter.get('/:emails',tokenVerify,async(req,res)=>{
     try {
       const result = await wishListModel.find({email:req.params.emails});
         res.send(result)
@@ -13,7 +14,7 @@ wishListRouter.get('/:emails',async(req,res)=>{
     }
 });
 
-wishListRouter.get('/wish/property', async (req, res) => {
+wishListRouter.get('/wish/property',tokenVerify, async (req, res) => {
   
   try {
     const result = await wishListModel.find();
@@ -26,7 +27,7 @@ wishListRouter.get('/wish/property', async (req, res) => {
 
 
 //wish list post route
-wishListRouter.post('/',async(req,res)=>{
+wishListRouter.post('/',tokenVerify,async(req,res)=>{
    try {
     await wishListModel(req.body).save();
     res.json({success:"wish list is inserted successfully"})
@@ -37,7 +38,7 @@ wishListRouter.post('/',async(req,res)=>{
 
 // delte
 
-wishListRouter.delete('/:id', async (req, res) => {
+wishListRouter.delete('/:id',tokenVerify, async (req, res) => {
     const itemId = req.params.id;
     try {
       // Use deleteOne with a query based on _id
@@ -51,7 +52,7 @@ wishListRouter.delete('/:id', async (req, res) => {
 
   // make offer api
   // post multipl
-  wishListRouter.get('/make/offer', async (req, res) => {
+  wishListRouter.get('/make/offer',tokenVerify, async (req, res) => {
   const id = req.query.id
   // console.log('h',typeof id);
   try {

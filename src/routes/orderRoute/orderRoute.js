@@ -7,13 +7,14 @@ const orderRouter = express.Router();
 const SSLCommerzPayment = require('sslcommerz-lts');
 const checkoutModel = require('../../models/checkout/checkoutModel');
 const { verify } = require('jsonwebtoken');
+const tokenVerify = require('../../middleware/TokenVerify/TokenVerify');
 const store_id = process.env.STORE_ID
 const store_passwd = process.env.STORE_PASS
 const is_live = false //true for live, false for sandbox
 
 const trans_id = new ObjectId().toString();
 
-orderRouter.post('/', async (req, res) => {
+orderRouter.post('/',tokenVerify, async (req, res) => {
 
     // console.log(req.body.formData);
 
@@ -114,7 +115,7 @@ orderRouter.post('/', async (req, res) => {
         }
     }
 });
-orderRouter.patch('/payment/success/:transId', async (req, res) => {
+orderRouter.patch('/payment/success/:transId',tokenVerify, async (req, res) => {
     // console.log("the transId :", req.params.transId)
     // console.log(req.query.id);
     const id = req.query.id
@@ -133,14 +134,14 @@ orderRouter.patch('/payment/success/:transId', async (req, res) => {
         // console.log('the update info2:', updateStatus)
         if (result.modifiedCount > 0 && updateStatus.modifiedCount > 0) {
             // res.redirect(`${process.env.CLIENT}/payment/success/${req.params.transId}`)
-            res.send({'result':'modified'})
+            res.send({ 'result': 'modified' })
         }
     } catch (error) {
         console.log(error);
     }
 });
 
-orderRouter.delete('/payment/fail/:transId', async (req, res) => {
+orderRouter.delete('/payment/fail/:transId',tokenVerify, async (req, res) => {
     const result = await orderModel.deleteOne({ transectionId: req.params.transId });
     // console.log('delete info:', result)
     if (result.deletedCount) {
@@ -149,9 +150,9 @@ orderRouter.delete('/payment/fail/:transId', async (req, res) => {
     }
 })
 // user get his own order
-orderRouter.get('/user', verify, async(req,res)=>{
+orderRouter.get('/user', verify, async (req, res) => {
     const userEmail = req.query.email
-    const result = await orderModel.find({email:userEmail}).populate('property')
+    const result = await orderModel.find({ email: userEmail }).populate('property')
     // console.log(result);
     res.send(result)
 })
@@ -159,16 +160,16 @@ orderRouter.get('/user', verify, async(req,res)=>{
 
 //  dletet user order api
 
-orderRouter.delete('/:id', async (req, res) => {
+orderRouter.delete('/:id',tokenVerify, async (req, res) => {
     const itemId = req.params.id;
     try {
-      // Use deleteOne with a query based on _id
-      const deletedItem = await orderModel.deleteOne({ _id: itemId });
-         res.send(deletedItem);
+        // Use deleteOne with a query based on _id
+        const deletedItem = await orderModel.deleteOne({ _id: itemId });
+        res.send(deletedItem);
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
-  });
+});
 
 
 
