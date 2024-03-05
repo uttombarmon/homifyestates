@@ -1,10 +1,11 @@
 const express = require('express');
 const chooseModel = require('../../../models/choose/chooseModel');
+const tokenVerify = require('../../../middleware/TokenVerify/TokenVerify');
 const chooseRoute = express.Router();
 
 
 // post multiple choose data;
-chooseRoute.post('/choose', async (req, res) => {
+chooseRoute.post('/choose',tokenVerify, async (req, res) => {
     try {
         const result = await chooseModel.insertMany(req.body);
         console.log('all choose data is inserted successfully');
@@ -16,7 +17,7 @@ chooseRoute.post('/choose', async (req, res) => {
 }
 );
 // find all choose data ;
-chooseRoute.get('/choose', async (req, res) => {
+chooseRoute.get('/choose',tokenVerify, async (req, res) => {
     try {
         const result = await chooseModel.find();
         console.log('all choose data is founded successfully');

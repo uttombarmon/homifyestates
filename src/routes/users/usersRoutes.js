@@ -68,7 +68,7 @@ userRoute.get('/all/agent', async (req, res) => {
 
 // agent id get 
 
-userRoute.get('/all/agent/id/:id', async (req, res)=>{
+userRoute.get('/all/agent/id/:id',tokenVerify, async (req, res)=>{
     const id= req.params.id
     try{
    const result = await userModel.findById(id)
@@ -80,25 +80,25 @@ userRoute.get('/all/agent/id/:id', async (req, res)=>{
 })
 
 //make admin api
-userRoute.patch('/all/makeadmin', async (req, res) => {
+userRoute.patch('/all/makeadmin',tokenVerify, async (req, res) => {
     const id = req.query.id
     const data = await userModel.updateOne({ _id: id }, { $set: { role: 'admin' } })
     res.send(data)
 })
 //make agent api
-userRoute.patch('/all/makeagent', async (req, res) => {
+userRoute.patch('/all/makeagent',tokenVerify, async (req, res) => {
     const id = req.query.id
     const data = await userModel.updateOne({ _id: id }, { $set: { role: 'agent' } })
     res.send(data)
 })
 //mark fraud api
-userRoute.patch('/all/markfraud', async (req, res) => {
+userRoute.patch('/all/markfraud',tokenVerify, async (req, res) => {
     const id = req.query.id
     const data = await userModel.updateOne({ _id: id }, { $set: { role: 'fraud' } })
     res.send(data)
 })
 //delete user api
-userRoute.delete('/all/deleteuser', async (req, res) => {
+userRoute.delete('/all/deleteuser',tokenVerify, async (req, res) => {
     const id = req.query.id
     const data = await userModel.deleteOne({ _id: id })
     res.send(data)
@@ -118,7 +118,7 @@ userRoute.post('/user', async (req, res) => {
 });
 
 // update a user to DB;
-userRoute.patch('/user/:email', async (req, res) => {
+userRoute.patch('/user/:email',tokenVerify, async (req, res) => {
     try {
         // console.log(req.params.email)
         const result = await userModel.updateOne({ email: req.params.email }, {
