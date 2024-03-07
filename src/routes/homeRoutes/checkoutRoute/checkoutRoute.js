@@ -1,6 +1,7 @@
 const express = require('express');
 const { model } = require('mongoose');
 const checkoutModel = require('../../../models/checkout/checkoutModel');
+const tokenVerify = require('../../../middleware/TokenVerify/TokenVerify');
 const checkoutRoute = express.Router();
 
 // post multiple data ;
@@ -14,7 +15,7 @@ checkoutRoute.post('/checkout', async (req, res) => {
     res.send(error.message).status(500)
   }
 });
-// get all checkout data;
+// get all checkout data for home page banner searching;
 checkoutRoute.get('/checkout', async (req, res) => {
   try {
     // console.log(req.query.type)
@@ -36,7 +37,7 @@ checkoutRoute.get('/checkouttt', async (req, res) => {
 });
 
 // GET Email
-checkoutRoute.get('/checkout/:email', async (req, res) => {
+checkoutRoute.get('/checkout/:email', tokenVerify, async (req, res) => {
   try {
     // console.log("123",req.params.email)
     const result = await checkoutModel.find({email:req.params.email});
@@ -46,7 +47,7 @@ checkoutRoute.get('/checkout/:email', async (req, res) => {
     res.send(error.message).status(500)
   }
 });
-// get features latest property data;
+// get all property data;
 checkoutRoute.get('/allcheckout', async (req, res) => {
   try {
     const result = await checkoutModel.find()
@@ -73,7 +74,7 @@ checkoutRoute.get('/features', async (req, res) => {
 });
 
 // get single property data;
-checkoutRoute.get('/checkoutt/:id', async (req, res) => {
+checkoutRoute.get('/checkoutt/:id',tokenVerify, async (req, res) => {
   try {
     const id = req.params.id
     const result = await checkoutModel.findById({ _id: id });

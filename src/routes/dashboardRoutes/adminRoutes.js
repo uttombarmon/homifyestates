@@ -3,9 +3,10 @@ const adminRouter = express.Router();
 const orderModel = require('../../models/order/orderModel');
 const checkoutModel = require('../../models/checkout/checkoutModel');
 const reviewModel = require('../../models/reviews/reviewsModel');
+const tokenVerify = require('../../middleware/TokenVerify/TokenVerify');
 
 // get all checkout data;
-adminRouter.get('/availablesold', async (req, res) => {
+adminRouter.get('/availablesold',tokenVerify, async (req, res) => {
     try {
         const result = await checkoutModel.find();
         console.log('avilable data is founded');
@@ -17,14 +18,14 @@ adminRouter.get('/availablesold', async (req, res) => {
     }
 });
 //   annual report 
-adminRouter.get('/annual', async (req, res) => {
+adminRouter.get('/annual',tokenVerify, async (req, res) => {
     const getdata = await orderModel.find({}).populate('property')
     const rent = getdata.filter(property => property.property?.property_status.toLowerCase().includes('rent'))
     const sale = getdata.filter(property => property.property?.property_status.toLowerCase().includes('sale'))
     res.send({ 'rent': rent, 'sale': sale });
 })
 // get all order data;
-adminRouter.get('/transections', async (req, res) => {
+adminRouter.get('/transections',tokenVerify, async (req, res) => {
     try {
         const result = await orderModel.find();
         console.log('order data is founded');
@@ -34,8 +35,20 @@ adminRouter.get('/transections', async (req, res) => {
         res.send(error.message).status(500)
     }
 });
+//delete single property
+adminRouter.delete('/property/delete',tokenVerify, async (req, res) => {
+    try {
+        const id = req.query.id
+        const result = await checkoutModel.deleteOne({ _id: id })
+        console.log(result);
+        res.send(result)
+    } catch (error) {
+        console.log('fail to find all reviews data', error.message)
+        res.send(error).status(500)
+    }
+})
 //delete single review
-adminRouter.delete('/review/delete', async (req, res) => {
+adminRouter.delete('/review/delete',tokenVerify, async (req, res) => {
     try {
         const id = req.query.id
         const result = await reviewModel.deleteOne({ _id: id })
